@@ -1,10 +1,10 @@
 import React from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
-const Table = props => {
+const OrderForm = props => {
   return (
     <Form>
-      <div class="shadow-sm">
+      <div className="shadow-sm">
         <h3>Заказчик</h3>
       </div>
       <FormGroup>
@@ -102,4 +102,4 @@ const Table = props => {
   );
 };
 
-export default Table;
+export default OrderForm;

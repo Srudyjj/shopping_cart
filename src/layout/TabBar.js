@@ -1,16 +1,25 @@
 import React, { useState } from 'react';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
+import {
+  TabContent,
+  TabPane,
+  Nav,
+  NavItem,
+  NavLink,
+  Row,
+  Col
+} from 'reactstrap';
 
-import Table from '../components/Table'
+import OrderForm from '../components/OrderForm';
+import OrderTable from '../components/OrderTable';
 
 import classnames from 'classnames';
 
-const TabBar = (props) => {
+const TabBar = props => {
   const [activeTab, setActiveTab] = useState('1');
 
   const toggle = tab => {
-    if(activeTab !== tab) setActiveTab(tab);
-  }
+    if (activeTab !== tab) setActiveTab(tab);
+  };
 
   return (
     <div className="container">
@@ -20,7 +29,9 @@ const TabBar = (props) => {
             <NavItem>
               <NavLink
                 className={classnames({ active: activeTab === '1' })}
-                onClick={() => { toggle('1'); }}
+                onClick={() => {
+                  toggle('1');
+                }}
               >
                 Приветствие
               </NavLink>
@@ -28,7 +39,9 @@ const TabBar = (props) => {
             <NavItem>
               <NavLink
                 className={classnames({ active: activeTab === '2' })}
-                onClick={() => { toggle('2'); }}
+                onClick={() => {
+                  toggle('2');
+                }}
               >
                 Заказы
               </NavLink>
@@ -36,7 +49,9 @@ const TabBar = (props) => {
             <NavItem>
               <NavLink
                 className={classnames({ active: activeTab === '3' })}
-                onClick={() => { toggle('3'); }}
+                onClick={() => {
+                  toggle('3');
+                }}
               >
                 Новый заказ
               </NavLink>
@@ -51,24 +66,24 @@ const TabBar = (props) => {
               </Row>
             </TabPane>
             <TabPane tabId="2">
-            <Row>
-              <Col sm="12">
-                <h4>Заказы</h4>
-              </Col>
-            </Row>
+              <Row>
+                <Col sm="12">
+                  <OrderTable />
+                </Col>
+              </Row>
             </TabPane>
             <TabPane tabId="3">
-            <Row>
-              <Col sm="12">
-              <Table/>
-              </Col>
-            </Row>
+              <Row>
+                <Col sm="12">
+                  <OrderForm />
+                </Col>
+              </Row>
             </TabPane>
           </TabContent>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default TabBar;
