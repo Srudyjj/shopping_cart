@@ -1,16 +1,5 @@
 import React, { useState } from 'react';
-import {
-  TabContent,
-  TabPane,
-  Nav,
-  NavItem,
-  NavLink,
-  Row,
-  Col
-} from 'reactstrap';
-
-import OrderForm from '../components/OrderForm';
-import OrderTable from '../components/OrderTable';
+import { Nav, NavItem, NavLink } from 'reactstrap';
 
 import classnames from 'classnames';
 
@@ -57,29 +46,6 @@ const TabBar = props => {
               </NavLink>
             </NavItem>
           </Nav>
-          <TabContent activeTab={activeTab}>
-            <TabPane tabId="1">
-              <Row>
-                <Col sm="12">
-                  <h4>Приветствие</h4>
-                </Col>
-              </Row>
-            </TabPane>
-            <TabPane tabId="2">
-              <Row>
-                <Col sm="12">
-                  <OrderTable />
-                </Col>
-              </Row>
-            </TabPane>
-            <TabPane tabId="3">
-              <Row>
-                <Col sm="12">
-                  <OrderForm />
-                </Col>
-              </Row>
-            </TabPane>
-          </TabContent>
         </div>
       </div>
     </div>

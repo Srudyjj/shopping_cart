@@ -38,7 +38,7 @@ const OrderForm = props => {
           placeholder="Ваш телефон"
         />
       </FormGroup>
-      <div class="shadow-sm">
+      <div className="shadow-sm">
         <h3>Заказ</h3>
       </div>
       <FormGroup>

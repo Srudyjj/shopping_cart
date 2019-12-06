@@ -1,13 +1,30 @@
-import React from 'react';
+//Core
+import React, { useState, useEffect } from 'react';
+//Styles
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
-import TabBar from './layout/TabBar'
+//Components
+import TabBar from './layout/TabBar';
+import OrderForm from './components/OrderForm';
+import OrderTable from './components/OrderTable';
+//Apl
+import api from './api/api';
 
 function App() {
+  const [state, setState] = useState({ orderList: [] });
+
+  useEffect(() => {
+    api.get('orders').then(res => setState({ orderList: res.data }));
+  }, []);
+
   return (
     <div className="container">
       <div className="row">
-      <TabBar></TabBar>
+        <TabBar />
+        <div className="col-sm-12">
+          <OrderForm />
+          <OrderTable list={state.orderList} />
+        </div>
       </div>
     </div>
   );

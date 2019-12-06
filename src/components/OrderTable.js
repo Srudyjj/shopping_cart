@@ -1,7 +1,10 @@
 import React from 'react';
 import { Table } from 'reactstrap';
+import TableRow from './TableRow';
 
 const OrderTable = props => {
+  console.log('TCL: OrderTable -> props', props);
+
   return (
     <Table bordered responsive hover>
       <thead>
@@ -18,17 +21,9 @@ const OrderTable = props => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>19.08.19</td>
-          <td>Петя Петечкин</td>
-          <td>5634634</td>
-          <td>Розница</td>
-          <td>Дима Иванов</td>
-          <td>Поставщик 1</td>
-          <td>-</td>
-          <td>Статус</td>
-          <td>Редю</td>
-        </tr>
+        {props.list.map(item => (
+          <TableRow key={item.id} item={item} />
+        ))}
       </tbody>
     </Table>
   );
