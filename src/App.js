@@ -17,12 +17,16 @@ function App() {
     api.get('orders').then(res => setState({ orderList: res.data }));
   }, []);
 
+  const onAddOrder = order => {
+    console.log(order);
+  };
+
   return (
     <div className="container">
       <div className="row">
         <TabBar />
         <div className="col-sm-12">
-          <OrderForm />
+          <OrderForm onSubmit={onAddOrder} />
           <OrderTable list={state.orderList} />
         </div>
       </div>
