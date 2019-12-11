@@ -1,18 +1,7 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-
-const TYPE = {
-  EMAIL: 'EMAIL',
-  NAME: 'NAME',
-  SURNAME: 'SURNAME',
-  PHONE: 'PHONE',
-  POSITION: 'POSITION',
-  TYPE: 'TYPE',
-  PROVIDER: 'PROVIDER',
-  ORDERID: 'ORDERID',
-  DATE: 'DATE',
-  COMMENT: 'COMMENT'
-};
+import useFormValidation from '../hooks/useFormValidation';
+import validator from '../validation/formValidator';
 
 const initialState = {
   email: '',
@@ -30,92 +19,17 @@ const initialState = {
 const OrderForm = props => {
   const { onSubmit } = props;
 
-  const formReducer = (state, action) => {
-    const reducers = {
-      [TYPE.EMAIL]: (state, payload) => {
-        return { ...state, email: payload };
-      },
-      [TYPE.NAME]: (state, payload) => {
-        return { ...state, name: payload };
-      },
-      [TYPE.SURNAME]: (state, payload) => {
-        return { ...state, surname: payload };
-      },
-      [TYPE.PHONE]: (state, payload) => {
-        return { ...state, phone: payload };
-      },
-      [TYPE.POSITION]: (state, payload) => {
-        return { ...state, position: payload };
-      },
-      [TYPE.TYPE]: (state, payload) => {
-        return { ...state, type: payload };
-      },
-      [TYPE.PROVIDER]: (state, payload) => {
-        return { ...state, provider: payload };
-      },
-      [TYPE.ORDERID]: (state, payload) => {
-        return { ...state, orderId: payload };
-      },
-      [TYPE.DATE]: (state, payload) => {
-        return { ...state, date: payload };
-      },
-      [TYPE.COMMENT]: (state, payload) => {
-        return { ...state, comment: payload };
-      }
-    };
-
-    return reducers[action.type](state, action.payload);
-  };
-
-  const [state, dispatch] = useReducer(formReducer, initialState);
-
-  const internalOnSubmit = e => {
-    e.preventDefault();
-    onSubmit(state);
-  };
-
-  const emailChange = e => {
-    dispatch({ type: TYPE.EMAIL, payload: e.target.value });
-  };
-
-  const nameChange = e => {
-    dispatch({ type: TYPE.NAME, payload: e.target.value });
-  };
-
-  const surnameChange = e => {
-    dispatch({ type: TYPE.SURNAME, payload: e.target.value });
-  };
-
-  const phoneChange = e => {
-    dispatch({ type: TYPE.PHONE, payload: e.target.value });
-  };
-
-  const positionChange = e => {
-    dispatch({ type: TYPE.POSITION, payload: e.target.value });
-  };
-
-  const typeChange = e => {
-    dispatch({ type: TYPE.TYPE, payload: e.target.value });
-  };
-
-  const providerChange = e => {
-    dispatch({ type: TYPE.PROVIDER, payload: e.target.value });
-  };
-
-  const idChange = e => {
-    dispatch({ type: TYPE.ORDERID, payload: e.target.value });
-  };
-
-  const dateChange = e => {
-    dispatch({ type: TYPE.DATE, payload: e.target.value });
-  };
-
-  const commentChange = e => {
-    dispatch({ type: TYPE.COMMENT, payload: e.target.value });
-  };
+  const {
+    values,
+    errors,
+    handleChange,
+    handleBlur,
+    isValid,
+    handleSubmit
+  } = useFormValidation(initialState, validator, onSubmit);
 
   return (
-    <Form onSubmit={internalOnSubmit}>
+    <Form onSubmit={handleSubmit}>
       <div className="shadow-sm">
         <h3>Заказчик</h3>
       </div>
@@ -126,9 +40,12 @@ const OrderForm = props => {
           name="email"
           id="emailInput"
           placeholder="Ваш имейл"
-          value={state.email}
-          onChange={emailChange}
+          value={values.email}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          className={errors.email && 'is-invalid'}
         />
+        {errors.email && <div className="invalid-feedback">{errors.email}</div>}
       </FormGroup>
       <FormGroup>
         <Label for="nameInput">Имя</Label>
@@ -137,9 +54,12 @@ const OrderForm = props => {
           name="name"
           id="nameInput"
           placeholder="Ваше имя"
-          value={state.name}
-          onChange={nameChange}
+          value={values.name}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          className={errors.name && 'is-invalid'}
         />
+        {errors.name && <div className="invalid-feedback">{errors.name}</div>}
       </FormGroup>
       <FormGroup>
         <Label for="surnameInput">Фамилия</Label>
@@ -148,9 +68,14 @@ const OrderForm = props => {
           name="surname"
           id="surnameInput"
           placeholder="Вашa фамилия"
-          value={state.surname}
-          onChange={surnameChange}
+          value={values.surname}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          className={errors.surname && 'is-invalid'}
         />
+        {errors.surname && (
+          <div className="invalid-feedback">{errors.surname}</div>
+        )}
       </FormGroup>
       <FormGroup>
         <Label for="phoneInput">Телефон</Label>
@@ -159,9 +84,12 @@ const OrderForm = props => {
           name="phone"
           id="phoneInput"
           placeholder="Ваш телефон"
-          value={state.phone}
-          onChange={phoneChange}
+          value={values.phone}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          className={errors.phone && 'is-invalid'}
         />
+        {errors.phone && <div className="invalid-feedback">{errors.phone}</div>}
       </FormGroup>
       <div className="shadow-sm">
         <h3>Заказ</h3>
@@ -173,9 +101,14 @@ const OrderForm = props => {
           name="position"
           id="positionInput"
           placeholder="Шариковые ручки"
-          value={state.position}
-          onChange={positionChange}
+          value={values.position}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          className={errors.position && 'is-invalid'}
         />
+        {errors.position && (
+          <div className="invalid-feedback">{errors.position}</div>
+        )}
         <div className="pt-3">
           <Button outline color="secondary">
             Добавить позицию
@@ -188,12 +121,15 @@ const OrderForm = props => {
           type="select"
           name="type"
           id="typeInput"
-          value={state.type}
-          onChange={typeChange}
+          value={values.type}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          className={errors.type && 'is-invalid'}
         >
           <option>Опт</option>
           <option>Розница</option>
         </Input>
+        {errors.type && <div className="invalid-feedback">{errors.type}</div>}
       </FormGroup>
       <FormGroup>
         <Label for="providerInput">Поставщий</Label>
@@ -201,49 +137,61 @@ const OrderForm = props => {
           type="select"
           name="provider"
           id="providerInput"
-          value={state.provider}
-          onChange={providerChange}
+          value={values.provider}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          className={errors.provider && 'is-invalid'}
         >
           <option>Поставщий 1</option>
           <option>Поставщий 2</option>
           <option>Поставщий 3</option>
         </Input>
+        {errors.provider && (
+          <div className="invalid-feedback">{errors.provider}</div>
+        )}
       </FormGroup>
       <FormGroup>
         <Label for="orderId">Ваш ID заказа</Label>
         <Input
-          disabled
+          readOnly
           type="text"
           name="orderId"
           id="orderId"
-          value={state.orderId}
-          onChange={idChange}
+          value={values.orderId}
+          onChange={handleChange}
+          onBlur={handleBlur}
         />
       </FormGroup>
       <FormGroup>
         <Label for="dateInput">Дата выполнения заказа</Label>
         <Input
           type="date"
-          name="dateInput"
+          name="date"
           id="dateInput"
           placeholder="Дата заказа"
-          value={state.date}
-          onChange={dateChange}
+          value={values.date}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          className={errors.date && 'is-invalid'}
         />
+        {errors.date && <div className="invalid-feedback">{errors.date}</div>}
       </FormGroup>
       <FormGroup>
         <Label for="commentInput">Коментарий</Label>
         <Input
           type="textarea"
-          name="commentInput"
+          name="comment"
           id="commentInput"
           placeholder="Ваш коментарий"
-          value={state.comment}
-          onChange={commentChange}
+          value={values.comment}
+          onChange={handleChange}
+          onBlur={handleBlur}
         />
       </FormGroup>
       <div className="d-flex justify-content-center">
-        <Button color="primary">Отправить</Button>
+        <Button disabled={!isValid} type="submit" color="primary">
+          Отправить
+        </Button>
         <Button className="ml-3" outline color="secondary" type="reset">
           Сброс
         </Button>
