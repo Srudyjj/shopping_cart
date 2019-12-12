@@ -29,6 +29,23 @@
       "provider": "Поставщик 1",
       "resolved": "19-08-19",
       "status": "new"
+    },
+    {
+      "customer": "Дима Иванов",
+      "date": "19-08-19",
+      "name": "json-server",
+      "provider": "Поставщик 1",
+      "resolved": "19-08-19",
+      "status": "new",
+      "type": "Розница",
+      "id": 4
+    }
+  ],
+  "users": [
+    {
+      "email": "olivier@mail.com",
+      "password": "$2a$10$VD8jeB7iVBdnNVinOTe2cettQkkdfwx9weH3l1ajsBVkYeOqn9fPm",
+      "id": 1
     }
   ]
 }
