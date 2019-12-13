@@ -1,36 +1,33 @@
 //Core
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 //Styles
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
+// Redux
+import { Provider } from 'react-redux';
+import store from './store/srore';
 //Components
 import TabBar from './layout/TabBar';
 import OrderForm from './components/OrderForm';
 import OrderTable from './components/OrderTable';
-//Apl
-import api from './api/api';
 
 function App() {
-  const [state, setState] = useState({ orderList: [] });
-
-  useEffect(() => {
-    api.get('orders').then(res => setState({ orderList: res.data }));
-  }, []);
-
   const onAddOrder = order => {
     console.log(order);
   };
 
   return (
-    <div className="container">
-      <div className="row">
-        <TabBar />
-        <div className="col-sm-12">
-          <OrderForm onSubmit={onAddOrder} />
-          <OrderTable list={state.orderList} />
+    <Provider store={store}>
+      <div className="container">
+        <div className="row">
+          <TabBar />
+          <div className="col-sm-12">
+            <OrderForm onSubmit={onAddOrder} />
+            <OrderTable />
+          </div>
         </div>
       </div>
-    </div>
+    </Provider>
   );
 }
 

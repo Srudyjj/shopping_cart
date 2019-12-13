@@ -1,9 +1,26 @@
-import React from 'react';
+// Core
+import React, { useEffect, useCallback } from 'react';
+// Redux
+import { connect } from 'react-redux';
+// Components
 import { Table } from 'reactstrap';
 import TableRow from './TableRow';
 
+// Actions
+import { getOrders } from '../store/actions/tableActions';
+
 const OrderTable = props => {
   console.log('TCL: OrderTable -> props', props);
+
+  const { list, getOrders } = props;
+
+  const loadOrders = useCallback(() => {
+    getOrders();
+  }, [getOrders]);
+
+  useEffect(() => {
+    loadOrders();
+  }, [loadOrders]);
 
   return (
     <Table bordered responsive hover>
@@ -21,7 +38,7 @@ const OrderTable = props => {
         </tr>
       </thead>
       <tbody>
-        {props.list.map(item => (
+        {list.map(item => (
           <TableRow key={item.id} item={item} />
         ))}
       </tbody>
@@ -29,4 +46,10 @@ const OrderTable = props => {
   );
 };
 
-export default OrderTable;
+const mapStateToProps = state => {
+  return {
+    list: state.orders.list
+  };
+};
+
+export default connect(mapStateToProps, { getOrders })(OrderTable);
