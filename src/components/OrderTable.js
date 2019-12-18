@@ -4,7 +4,7 @@ import React, { useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 // Components
 import { Table } from 'reactstrap';
-import TableRow from './TableRow';
+import { Button } from 'reactstrap';
 
 // Actions
 import { getOrders } from '../store/actions/tableActions';
@@ -39,7 +39,19 @@ const OrderTable = props => {
       </thead>
       <tbody>
         {list.map(item => (
-          <TableRow key={item.id} item={item} />
+          <tr key={item.id}>
+            <td>{item.date}</td>
+            <td>{item.name}</td>
+            <td>{item.id}</td>
+            <td>{item.type}</td>
+            <td>{item.customer}</td>
+            <td>{item.provider}</td>
+            <td>{item.resolved}</td>
+            <td>{item.status}</td>
+            <td>
+              <Button color="secondary">Ред.</Button>
+            </td>
+          </tr>
         ))}
       </tbody>
     </Table>

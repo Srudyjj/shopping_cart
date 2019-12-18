@@ -19,7 +19,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "db": "json-server-auth --watch db/db.json -r db/routes.json --port 3004"
+    "authdb": "json-server-auth --watch db/db.json -r db/routes.json --port 3004",
+    "db": "json-server --watch db/db.json --port 3004"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -1,23 +1,18 @@
+//Core
 import React from 'react';
+// Redux
+import { connect } from 'react-redux';
+//Actions
+import { addOrder } from '../store/actions/orderFormActions';
+//Components
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+//Hooks
 import useFormValidation from '../hooks/useFormValidation';
+//Validators
 import validator from '../validation/formValidator';
 
-const initialState = {
-  email: '',
-  name: '',
-  surname: '',
-  phone: '',
-  position: '',
-  type: '',
-  provider: '',
-  orderId: '',
-  date: '',
-  comment: ''
-};
-
 const OrderForm = props => {
-  const { onSubmit } = props;
+  const { initialState, addOrder } = props;
 
   const {
     values,
@@ -26,7 +21,7 @@ const OrderForm = props => {
     handleBlur,
     isValid,
     handleSubmit
-  } = useFormValidation(initialState, validator, onSubmit);
+  } = useFormValidation(initialState, validator, addOrder);
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -200,4 +195,10 @@ const OrderForm = props => {
   );
 };
 
-export default OrderForm;
+const mapStateToProps = state => {
+  return {
+    initialState: state.orders.initialFormState
+  };
+};
+
+export default connect(mapStateToProps, { addOrder })(OrderForm);
