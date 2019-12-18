@@ -11,6 +11,7 @@ import TabBar from './layout/TabBar';
 import Welcome from './layout/Welcome';
 import OrderForm from './components/OrderForm';
 import OrderTable from './components/OrderTable';
+import NoMatch from './layout/NoMatch';
 //Router
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -31,6 +32,9 @@ function App() {
                 </Route>
                 <Route path="/orders" exact>
                   <OrderTable />
+                </Route>
+                <Route path="*">
+                  <NoMatch />
                 </Route>
               </Switch>
             </div>

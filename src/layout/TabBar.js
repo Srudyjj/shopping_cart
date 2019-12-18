@@ -1,18 +1,14 @@
 //Core
-import React, { useState } from 'react';
+import React from 'react';
 //Components
 import { Nav, NavItem, NavLink } from 'reactstrap';
 //Helpers
 import classnames from 'classnames';
 //Router
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const TabBar = props => {
-  const [activeTab, setActiveTab] = useState('1');
-
-  const toggle = tab => {
-    if (activeTab !== tab) setActiveTab(tab);
-  };
+  let location = useLocation();
 
   return (
     <div className="container">
@@ -21,30 +17,28 @@ const TabBar = props => {
           <Nav tabs justified>
             <NavItem>
               <NavLink
-                className={classnames({ active: activeTab === '1' })}
-                onClick={() => {
-                  toggle('1');
-                }}
+                tag="span"
+                className={classnames({ active: location.pathname === '/' })}
               >
                 <Link to="/">Приветствие</Link>
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink
-                className={classnames({ active: activeTab === '2' })}
-                onClick={() => {
-                  toggle('2');
-                }}
+                tag="span"
+                className={classnames({
+                  active: location.pathname === '/orders'
+                })}
               >
                 <Link to="/orders">Заказы</Link>
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink
-                className={classnames({ active: activeTab === '3' })}
-                onClick={() => {
-                  toggle('3');
-                }}
+                tag="span"
+                className={classnames({
+                  active: location.pathname === '/new_order'
+                })}
               >
                 <Link to="/new_order">Новый заказ</Link>
               </NavLink>
