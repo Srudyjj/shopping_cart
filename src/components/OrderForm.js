@@ -4,15 +4,30 @@ import React from 'react';
 import { connect } from 'react-redux';
 //Actions
 import { addOrder } from '../store/actions/orderFormActions';
+// Actions
+import { toggleEditMode } from '../store/actions/tableActions';
 //Components
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { orderStatus } from './orderFormStatus';
 //Hooks
 import useFormValidation from '../hooks/useFormValidation';
 //Validators
 import validator from '../validation/formValidator';
+//Router
+import { useHistory } from 'react-router-dom';
+
+//
 
 const OrderForm = props => {
-  const { initialState, addOrder } = props;
+  let history = useHistory();
+
+  const { initialState, isEditMode, addOrder } = props;
+
+  const onSubmit = values => {
+    addOrder(values);
+    toggleEditMode(false);
+    history.push('/orders');
+  };
 
   const {
     values,
@@ -21,7 +36,7 @@ const OrderForm = props => {
     handleBlur,
     isValid,
     handleSubmit
-  } = useFormValidation(initialState, validator, addOrder);
+  } = useFormValidation(initialState, validator, onSubmit);
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -171,6 +186,23 @@ const OrderForm = props => {
         />
         {errors.date && <div className="invalid-feedback">{errors.date}</div>}
       </FormGroup>
+      {isEditMode && (
+        <FormGroup>
+          <Label for="statusInput">Статус</Label>
+          <Input
+            type="select"
+            name="status"
+            id="statusInput"
+            value={values.email}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          >
+            {Object.values(orderStatus).forEach(type => (
+              <option>{type}</option>
+            ))}
+          </Input>
+        </FormGroup>
+      )}
       <FormGroup>
         <Label for="commentInput">Коментарий</Label>
         <Input
@@ -197,7 +229,8 @@ const OrderForm = props => {
 
 const mapStateToProps = state => {
   return {
-    initialState: state.orders.initialFormState
+    initialState: state.orders.initialFormState,
+    isEditMode: state.orders.isEditMode
   };
 };
 

@@ -2,6 +2,7 @@ import action from '../actions/types';
 
 const initialState = {
   list: [],
+  isEditMode: false,
   initialFormState: {
     id: 0,
     email: '',
@@ -9,9 +10,8 @@ const initialState = {
     surname: '',
     phone: '',
     position: '',
-    type: '',
-    provider: '',
-    orderId: '',
+    type: 'Розница',
+    provider: 'Поставщик 1',
     date: '',
     comment: ''
   }
@@ -22,9 +22,13 @@ const orderReducer = Object.freeze({
     return { ...state, list: payload };
   },
   [action.ADD_ORDER]: (state, payload) => {
-    console.log('TCL: payload', payload);
-
     return { ...state, list: [...state.list, payload] };
+  },
+  [action.EDIT_ORDER]: (state, payload) => {
+    return { ...state, initialFormState: payload };
+  },
+  [action.EDIT_MODE]: (state, payload) => {
+    return { ...state, isEditMode: payload };
   }
 });
 

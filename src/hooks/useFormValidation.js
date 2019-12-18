@@ -1,6 +1,22 @@
 import { useState, useEffect } from 'react';
 
-function useFormValidation(initialState, validate, callback) {
+import { orderStatus } from '../components/orderFormStatus';
+
+const INITIAL_STATE = {
+  id: 0,
+  email: '',
+  name: '',
+  surname: '',
+  phone: '',
+  position: '',
+  type: 'Розница',
+  provider: 'Поставщик 1',
+  date: '',
+  comment: '',
+  status: orderStatus.New
+};
+
+function useFormValidation(initialState = INITIAL_STATE, validate, callback) {
   const [values, setValues] = useState(initialState);
   const [errors, setErrors] = useState({});
   const [isValid, setValid] = useState(false);

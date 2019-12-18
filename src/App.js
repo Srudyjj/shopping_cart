@@ -33,6 +33,9 @@ function App() {
                 <Route path="/orders" exact>
                   <OrderTable />
                 </Route>
+                <Route path="/edit_order" exact>
+                  <OrderForm />
+                </Route>
                 <Route path="*">
                   <NoMatch />
                 </Route>

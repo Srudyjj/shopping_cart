@@ -3,16 +3,26 @@ import React, { useEffect, useCallback } from 'react';
 // Redux
 import { connect } from 'react-redux';
 // Components
-import { Table } from 'reactstrap';
-import { Button } from 'reactstrap';
-
+import { Table, Button } from 'reactstrap';
+//Router
+import { useHistory } from 'react-router-dom';
 // Actions
-import { getOrders } from '../store/actions/tableActions';
+import {
+  getOrders,
+  editOrder,
+  toggleEditMode
+} from '../store/actions/tableActions';
 
 const OrderTable = props => {
-  console.log('TCL: OrderTable -> props', props);
+  const history = useHistory();
 
-  const { list, getOrders } = props;
+  const { list, getOrders, editOrder, toggleEditMode } = props;
+
+  const onEditClick = id => e => {
+    editOrder(list.find(item => item.id === id));
+    toggleEditMode(true);
+    history.push(`/edit_order`);
+  };
 
   const loadOrders = useCallback(() => {
     getOrders();
@@ -49,7 +59,9 @@ const OrderTable = props => {
             <td>{item.resolved}</td>
             <td>{item.status}</td>
             <td>
-              <Button color="secondary">Ред.</Button>
+              <Button color="secondary" onClick={onEditClick(item.id)}>
+                Ред.
+              </Button>
             </td>
           </tr>
         ))}
@@ -64,4 +76,8 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { getOrders })(OrderTable);
+export default connect(mapStateToProps, {
+  getOrders,
+  editOrder,
+  toggleEditMode
+})(OrderTable);

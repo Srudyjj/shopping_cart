@@ -10,3 +10,17 @@ export function getOrders() {
     });
   };
 }
+
+export function editOrder(order) {
+  return {
+    type: action.EDIT_ORDER,
+    payload: order
+  };
+}
+
+export function toggleEditMode(isEdit) {
+  return {
+    type: action.EDIT_MODE,
+    payload: isEdit
+  };
+}
