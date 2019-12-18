@@ -8,22 +8,36 @@ import { Provider } from 'react-redux';
 import store from './store/store';
 //Components
 import TabBar from './layout/TabBar';
+import Welcome from './layout/Welcome';
 import OrderForm from './components/OrderForm';
 import OrderTable from './components/OrderTable';
+//Router
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <Provider store={store}>
-      <div className="container">
-        <div className="row">
-          <TabBar />
-          <div className="col-sm-12">
-            <OrderForm />
-            <OrderTable />
+    <Router>
+      <Provider store={store}>
+        <div className="container">
+          <div className="row">
+            <TabBar />
+            <div className="col-sm-12">
+              <Switch>
+                <Route path="/" exact>
+                  <Welcome />
+                </Route>
+                <Route path="/new_order" exact>
+                  <OrderForm />
+                </Route>
+                <Route path="/orders" exact>
+                  <OrderTable />
+                </Route>
+              </Switch>
+            </div>
           </div>
         </div>
-      </div>
-    </Provider>
+      </Provider>
+    </Router>
   );
 }
 

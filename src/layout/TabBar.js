@@ -1,7 +1,11 @@
+//Core
 import React, { useState } from 'react';
+//Components
 import { Nav, NavItem, NavLink } from 'reactstrap';
-
+//Helpers
 import classnames from 'classnames';
+//Router
+import { Link } from 'react-router-dom';
 
 const TabBar = props => {
   const [activeTab, setActiveTab] = useState('1');
@@ -22,7 +26,7 @@ const TabBar = props => {
                   toggle('1');
                 }}
               >
-                Приветствие
+                <Link to="/">Приветствие</Link>
               </NavLink>
             </NavItem>
             <NavItem>
@@ -32,7 +36,7 @@ const TabBar = props => {
                   toggle('2');
                 }}
               >
-                Заказы
+                <Link to="/orders">Заказы</Link>
               </NavLink>
             </NavItem>
             <NavItem>
@@ -42,7 +46,7 @@ const TabBar = props => {
                   toggle('3');
                 }}
               >
-                Новый заказ
+                <Link to="/new_order">Новый заказ</Link>
               </NavLink>
             </NavItem>
           </Nav>
